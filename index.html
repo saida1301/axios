@@ -41,7 +41,7 @@
                 console.log(res.data)
             })
     }
-addUser() 
+    addUser()
 
     //2
 
@@ -154,7 +154,7 @@ addUser()
     }
 
     //4
-    function expensiveProduct() {
+    function expensive() {
 
         instance.get('products')
             .then(res => {
@@ -167,18 +167,34 @@ addUser()
             })
 
     }
+    expensive()
+
+    function averageProduct() {
+        instance.get('products')
+            .then(res => {
+                total = 0;
+                count = 0;
+                res.data.forEach(element => {
+                    total += total + element.unitsInStock
+                    count++
+                })
+                let average = total / count
+                console.log(average);
+            })
+    }
+    averageProduct()
 
     function startWithC() {
 
         instance.get('products')
             .then(res => {
                 res.data.forEach(element => {
-                    if(element.name.startsWith('c')){
+                    if (element.name.startsWith('c')) {
                         console.log(element);
                     }
                 })
             })
-     
+
 
     }
 
@@ -187,13 +203,13 @@ addUser()
         instance.get('customers')
             .then(res => {
                 res.data.forEach(element => {
-                    if(element.address.city == 'London'){
+                    if (element.address.city == 'London') {
                         console.log(element);
                     }
-                  
+
                 })
             })
-   
+
 
     }
     london()
@@ -203,16 +219,14 @@ addUser()
         instance.get('customers')
 
             .then(res => {
-
+                count = 0
                 res.data.forEach(element => {
-                    if(element.address.region == 'NULL'){
-                        console.log(element);
+
+                    if (element.address.region == 'NULL') {
+                        count++
                     }
-               
-
                 })
-           
-
+                console.log(count);
             })
 
     }
