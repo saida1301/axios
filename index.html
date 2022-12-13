@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    //1
+    const instance = axios.create({
+        baseURL: 'https://northwind.vercel.app/api/',
+        timeout: 1000
+    });
+
+
+
+
+    function addUser() {
+        let addCustomer = {
+            companyName: 'Saida',
+            contactName: 'Saide',
+            contactTitle: 'Sales',
+            address: {
+                street: 'Cerkassi',
+                city: 'Baku',
+                region: "Azerbaijan",
+                postalCode: "Aze044",
+                country: "Baku",
+                phone: "0777645548"
+            }
+        }
+        instance.post(("customers"), addCustomer)
+            .then(res => {
+                console.log(res.data)
+            })
+    }
+addUser() 
+
+    //2
+
+    function deleteById(id) {
+
+        instance.delete(`customers/${id}`)
+            .then(res => {
+                console.log(res)
+            })
+
+    }
+
+    //3
+
+    function updateCustomer(id) {
+
+        let updatecustomer = {
+            companyName: 'Samaya',
+            contactName: 'Ali',
+            contactTitle: 'Sale',
+            address: {
+                street: 'Cherkassi',
+                phone: "0707645548"
+            }
+        }
+        instance.put(`customers/${id}`)
+            .then(res => {
+                console.log(res)
+            })
+
+
+    }
+
+    // Fetch ile
+
+
+
+    let baseURL = 'https://northwind.vercel.app/api/'
+
+    function addCustomerWithFetch() {
+
+        let addCustomer = {
+            companyName: 'Saida',
+            contactName: 'Saide',
+            contactTitle: 'Sales',
+            address: {
+                street: 'Cerkassi',
+                city: 'Baku',
+                region: "Azerbaijan",
+                postalCode: "Aze044",
+                country: "Baku",
+                phone: "0777645548"
+            }
+        }
+        addCustomerWithFetch()
+        fetch(baseURL + 'customers', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(addCustomer)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+
+    }
+
+    function deleteByIdFetch(id) {
+
+        fetch(baseURL + `customers/${id}`, {
+                method: 'DELETE'
+            })
+            .then(res => {
+                console.log(res)
+            })
+
+
+    }
+
+
+    function updateCustomerFetch(id) {
+
+
+        let updatecustomer = {
+            companyName: 'Samaya',
+            contactName: 'Ali',
+            contactTitle: 'Sale',
+            address: {
+                street: 'Cherkassi',
+                phone: "0707645548"
+            }
+        }
+
+        fetch(baseURL + `customers/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatecustomer)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+
+    }
+
+    //4
+    function expensiveProduct() {
+
+        instance.get('products')
+            .then(res => {
+
+                let sort_arr = res.data.sort(function (a, b) {
+                    return b.unitPrice - a.unitPrice
+                })
+                console.log(sort_arr[0]);
+
+            })
+
+    }
+
+    function startWithC() {
+
+        instance.get('products')
+            .then(res => {
+                res.data.forEach(element => {
+                    if(element.name.startsWith('c')){
+                        console.log(element);
+                    }
+                })
+            })
+     
+
+    }
+
+    function london() {
+
+        instance.get('customers')
+            .then(res => {
+                res.data.forEach(element => {
+                    if(element.address.city == 'London'){
+                        console.log(element);
+                    }
+                  
+                })
+            })
+   
+
+    }
+    london()
+
+    function regionNull() {
+
+        instance.get('customers')
+
+            .then(res => {
+
+                res.data.forEach(element => {
+                    if(element.address.region == 'NULL'){
+                        console.log(element);
+                    }
+               
+
+                })
+           
+
+            })
+
+    }
+    regionNull()
+
+
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(res => {
+            count = 0
+            res.data.forEach(elem => {
+                if (elem.userId == 1) {
+                    count++
+                }
+            })
+            console.log(count);
+        })
+
+    axios.get('https://jsonplaceholder.typicode.com/albums')
+        .then(res => {
+            count = 0
+            res.data.forEach(elem => {
+                if (elem.userId == 1) {
+                    count++
+                }
+            })
+            console.log(count);
+        })
+</script>
+
+</html>
